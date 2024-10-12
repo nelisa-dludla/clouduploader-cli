@@ -1,0 +1,1 @@
+This is another test file that will be copied from my personal PC to a Google Cloud Platform storage bucket.

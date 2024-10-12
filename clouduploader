@@ -1,0 +1,26 @@
+#!/bin/bash
+
+FILE=$1
+BUCKET_NAME=${2:-"gcp-file-storage"}
+
+if ! command -v gcloud &> /dev/null; then
+  echo "gcloud cli not found. Please install it first"
+  exit 1
+fi
+
+echo "Checking file: $FILE"
+echo "Uploading to bucket: $BUCKET_NAME"
+
+if [ -z "$FILE" ]; then
+  echo "Usage: clouduploader /path/to/file.txt [bucket name]"
+else
+  if [ -e "$FILE" ]; then
+    if gcloud storage cp "$FILE" gs://$BUCKET_NAME/from-personal-pc/; then
+      echo "File uploaded successfully"
+    else
+      echo "Error uploading file"
+    fi
+  else
+    echo "$FILE does not exist"
+  fi
+fi
